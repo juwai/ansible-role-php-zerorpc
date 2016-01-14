@@ -1,0 +1,21 @@
+---
+- name: ensure php msgpack extension is installed
+  shell: yes '' | pecl install msgpack-{{ pecl_msgpack_version }}
+  register: pecl_msgpack_result
+  changed_when: "'installed' not in pecl_msgpack_result.stdout"
+  failed_when: "'ERROR' in pecl_msgpack_result.stdout"
+
+- name: ensure php zmq extension is installed
+  shell: yes '' | pecl install zmq-{{ pecl_zmq_version }}
+  register: pecl_zmq_result
+  changed_when: "'installed' not in pecl_zmq_result.stdout"
+  failed_when: "'ERROR' in pecl_zmq_result.stdout"
+
+- name: ensure zmq and msgpack extension present in php.d/*.ini
+  template:
+    src: package.ini.j2
+    dest: "/etc/php.d/{{ item }}.ini"
+  with_items:
+    - zmq
+    - msgpack
+  notify: restart php-fpm
