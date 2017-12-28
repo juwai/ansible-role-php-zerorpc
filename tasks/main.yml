@@ -28,9 +28,9 @@
 
 - name: git clone msgpack repo
   git:
-    repo: "{{ msgpack_source_repo }}"
+    repo: https://github.com/msgpack/msgpack-php.git
     dest: "/tmp/php-msgpack"
-    version: "master"
+    version: "msgpack-2.0.2"
   when: pecl_msgpack_version != '0.5.7'
 
 - name: install php-msgpack 1.1.3
