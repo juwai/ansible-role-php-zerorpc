@@ -4,32 +4,40 @@
   register: pecl_msgpack_result
   changed_when: "'installed' not in pecl_msgpack_result.stdout"
   failed_when: "'ERROR' in pecl_msgpack_result.stdout"
+  when: pecl_zmq_version == '0.5.7'
 
 - name: ensure php zmq extension is installed
   shell: yes '' | pecl install zmq-{{ pecl_zmq_version }}
   register: pecl_zmq_result
   changed_when: "'installed' not in pecl_zmq_result.stdout"
   failed_when: "'ERROR' in pecl_zmq_result.stdout"
-
-- name: ensure php zmq extension is installed
-  shell: yes '' | pecl install zmq-{{ pecl_zmq_version }}
-  register: pecl_zmq_result
-  changed_when: "'installed' not in pecl_zmq_result.stdout"
-  failed_when: "'ERROR' in pecl_zmq_result.stdout"
-  when: pecl_zmq_version != '1.1.3'
+  when: pecl_zmq_version == '1.1.2'
 
 - name: git clone zmq repo
   git:
     repo: "{{ zmq_source_repo }}"
     dest: "/tmp/php-zmq"
     version: "master"
-  when: pecl_zmq_version == '1.1.3'
+  when: pecl_zmq_version != '1.1.2'
 
 - name: install php-zmq 1.1.3
   shell: phpize && ./configure && make && make install
   args:
     chdir: /tmp/php-zmq
-  when: pecl_zmq_version == '1.1.3'
+  when: pecl_zmq_version != '1.1.2'
+
+- name: git clone msgpack repo
+  git:
+    repo: "{{ msgpack_source_repo }}"
+    dest: "/tmp/php-msgpack"
+    version: "master"
+  when: pecl_msgpack_version != '0.5.7'
+
+- name: install php-msgpack 1.1.3
+  shell: phpize && ./configure && make && make install
+  args:
+    chdir: /tmp/php-msgpack
+  when: pecl_msgpack_version != '0.5.7'
 
 - name: ensure zmq and msgpack extension present in php.d/*.ini
   template:
