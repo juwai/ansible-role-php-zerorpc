@@ -1,6 +1,9 @@
 ---
+msgpack_source_version: 'msgpack-2.0.2'
 pecl_msgpack_version: 0.5.7
 pecl_zmq_version: 1.1.2
 
 php_fpm_daemon: php-fpm
-php_version: 'php5'
+zmq_source_repo: 'https://github.com/juwai/php-zmq.git'
+
+zmq_source_version: 'f2617063a4c007ca6073c0d09e9f36fd9b87ddaf'

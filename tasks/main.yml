@@ -21,9 +21,9 @@
 
 - name: git clone zmq repo
   git:
-    repo: "{{ zmq_source_repo }}"
+    repo: https://github.com/mkoppanen/php-zmq.git
     dest: "/tmp/php-zmq"
-    version: "master"
+    version: "{{ zmq_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
 - name: install php-zmq 1.1.3
@@ -36,7 +36,7 @@
   git:
     repo: https://github.com/msgpack/msgpack-php.git
     dest: "/tmp/php-msgpack"
-    version: "msgpack-2.0.2"
+    version: "{{ msgpack_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
 - name: install php-msgpack 1.1.3
