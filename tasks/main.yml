@@ -19,27 +19,27 @@
   failed_when: "'ERROR' in pecl_zmq_result.stdout"
   when: "'PHP 5' in php_version.stdout"
 
-- name: git clone zmq repo
+- name: git clone php-zmq
   git:
     repo: https://github.com/mkoppanen/php-zmq.git
     dest: "/tmp/php-zmq"
     version: "{{ zmq_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
-- name: install php-zmq 1.1.3
+- name: install zmq php extension from source
   shell: phpize && ./configure && make && make install
   args:
     chdir: /tmp/php-zmq
   when: "'PHP 7' in php_version.stdout"
 
-- name: git clone msgpack repo
+- name: git clone msgpack-php
   git:
     repo: https://github.com/msgpack/msgpack-php.git
     dest: "/tmp/php-msgpack"
     version: "{{ msgpack_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
-- name: install php-msgpack 1.1.3
+- name: install msgpack php extension from source
   shell: phpize && ./configure && make && make install
   args:
     chdir: /tmp/php-msgpack
