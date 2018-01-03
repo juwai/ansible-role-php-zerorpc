@@ -1,15 +1,49 @@
 ---
+- name: Register php version
+  shell: command -v php && php --version
+  register: php_version
+  changed_when: false
+  ignore_errors: true
+
 - name: ensure php msgpack extension is installed
   shell: yes '' | pecl install msgpack-{{ pecl_msgpack_version }}
   register: pecl_msgpack_result
   changed_when: "'installed' not in pecl_msgpack_result.stdout"
   failed_when: "'ERROR' in pecl_msgpack_result.stdout"
+  when: "'PHP 5' in php_version.stdout"
 
 - name: ensure php zmq extension is installed
   shell: yes '' | pecl install zmq-{{ pecl_zmq_version }}
   register: pecl_zmq_result
   changed_when: "'installed' not in pecl_zmq_result.stdout"
   failed_when: "'ERROR' in pecl_zmq_result.stdout"
+  when: "'PHP 5' in php_version.stdout"
+
+- name: git clone php-zmq
+  git:
+    repo: https://github.com/mkoppanen/php-zmq.git
+    dest: "/tmp/php-zmq"
+    version: "{{ zmq_source_version }}"
+  when: "'PHP 7' in php_version.stdout"
+
+- name: install zmq php extension from source
+  shell: phpize && ./configure && make && make install
+  args:
+    chdir: /tmp/php-zmq
+  when: "'PHP 7' in php_version.stdout"
+
+- name: git clone msgpack-php
+  git:
+    repo: https://github.com/msgpack/msgpack-php.git
+    dest: "/tmp/php-msgpack"
+    version: "{{ msgpack_source_version }}"
+  when: "'PHP 7' in php_version.stdout"
+
+- name: install msgpack php extension from source
+  shell: phpize && ./configure && make && make install
+  args:
+    chdir: /tmp/php-msgpack
+  when: "'PHP 7' in php_version.stdout"
 
 - name: ensure zmq and msgpack extension present in php.d/*.ini
   template:
