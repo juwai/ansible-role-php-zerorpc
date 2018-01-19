@@ -53,3 +53,16 @@
     - zmq
     - msgpack
   notify: restart php-fpm
+
+- name: create opcache blacklist file (fix segfault)
+  copy:
+    src: 'files/opcache-zerorpc.blacklist'
+    dest: '{{ php_extensions_config_path }}/opcache-zerorpc.blacklist'
+  when: php_zerorpc_segfault_fix
+
+- name: add opcache blacklist file to config (fix segfault)
+  lineinfile:
+    dest: '{{ php_extensions_config_path }}/{{ php_opcache_config_filename }}'
+    line: 'opcache.blacklist_filename={{ php_extensions_config_path }}/opcache*.blacklist'
+    regexp: 'opcache.blacklist_filename'
+  when: php_zerorpc_segfault_fix
