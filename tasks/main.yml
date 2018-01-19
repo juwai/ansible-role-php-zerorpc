@@ -45,10 +45,10 @@
     chdir: /tmp/php-msgpack
   when: "'PHP 7' in php_version.stdout"
 
-- name: ensure zmq and msgpack extension present in php.d/*.ini
+- name: ensure zmq and msgpack extension present in php config
   template:
     src: package.ini.j2
-    dest: "/etc/php.d/{{ item }}.ini"
+    dest: '/{{ php_extensions_config_path }}/{{ item }}.ini'
   with_items:
     - zmq
     - msgpack

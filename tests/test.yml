@@ -1,6 +1,11 @@
 ---
 - hosts: default
-  remote_user: vagrant
+  remote_user: 'vagrant'
   become: yes
+  vars:
+    php_webserver_daemon: 'php-fpm'
+    php_packages:
+      - 'php-fpm'
   roles:
-    - php-zerorpc
+    - 'geerlingguy.php'
+    - 'php-zerorpc'

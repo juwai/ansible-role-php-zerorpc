@@ -1,7 +1,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-system("ansible-galaxy install -f -i -p roles -r requirements.yml")
+system("
+    if [ #{ARGV[0]} = 'up' ]; then
+        ansible-galaxy install -f -i -p roles -r requirements.yml
+    fi
+")
 
 Vagrant.configure(2) do |config|
   config.vm.box = "juwai-centos68"
