@@ -1,0 +1,16 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+system("ansible-galaxy install -f -i -p roles -r requirements.yml")
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "juwai-centos68"
+  config.vm.box_url = "http://downloads.juwai.io/devops/boxes/juwai-centos68.box"
+
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provision "ansible" do |ansible|
+    ansible.verbose = "v"
+    ansible.playbook = "test.yml"
+  end
+end

@@ -9,7 +9,7 @@ Install PHP extensions required by php-zerorpc on CentOS servers:
 Requirements
 ------------
 
-Written in Ansible 1.9.*
+Written in Ansible 2.3.*
 
 Please make sure PHP pecl command installed.
 
@@ -17,6 +17,12 @@ Role Variables
 --------------
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
+
+### msgpack_source_version
+
+Commit, tag, or branch of msgpack PHP extension to use when installing from source.
+
+Default is `msgpack-2.0.2`.
 
 ### pecl_msgpack_version
 
@@ -30,11 +36,35 @@ ZeroMQ PHP extension version.
 
 Default is `1.1.2`.
 
+### php_extensions_config_path
+
+Path of folder containing PHP extension config files.
+
+Default is `/etc/php.d`.
+
 ### php_fpm_daemon
 
 php_fpm daemon's name.
 
 Default is `php-fpm`.
+
+### php_opcache_config_filename
+
+PHP opcache extension config filename.
+
+Default is `10-opcache.ini`.
+
+### php_zerorpc_segfault_fix
+
+Enable to avoid segfault in PHP7 with opcache.
+
+Default is `false`.
+
+### zmq_source_version
+
+Commit, tag, or branch of zmq PHP extension to use when installing from source.
+
+Default is `f2617063a4c007ca6073c0d09e9f36fd9b87ddaf`.
 
 Dependencies
 ------------
