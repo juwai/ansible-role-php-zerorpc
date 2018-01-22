@@ -1,9 +1,16 @@
 ---
 msgpack_source_version: 'msgpack-2.0.2'
-pecl_msgpack_version: 0.5.7
-pecl_zmq_version: 1.1.2
 
-php_fpm_daemon: php-fpm
+pecl_msgpack_version: '0.5.7'
+pecl_zmq_version: '1.1.2'
+
+php_extensions_config_path: '/etc/php.d'
+php_fpm_daemon: 'php-fpm'
+php_opcache_config_filename: '10-opcache.ini'
+
+# Enable this to avoid the segfault that happens in the zerorpc php client
+# when running php7 with opcache
+php_zerorpc_segfault_fix: false
 
 # zmq version 1.1.3
 zmq_source_version: 'f2617063a4c007ca6073c0d09e9f36fd9b87ddaf'
