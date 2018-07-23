@@ -19,6 +19,11 @@
   failed_when: "'ERROR' in pecl_zmq_result.stdout"
   when: "'PHP 5' in php_version.stdout"
 
+- name: ensure php-zmq folder not exist
+  file:
+    path: /tmp/php-zmq
+    state: absent
+
 - name: git clone php-zmq
   git:
     repo: https://github.com/mkoppanen/php-zmq.git
@@ -31,6 +36,11 @@
   args:
     chdir: /tmp/php-zmq
   when: "'PHP 7' in php_version.stdout"
+
+- name: ensure msgpack-php folder not exist
+  file:
+    path: /tmp/php-msgpack
+    state: absent
 
 - name: git clone msgpack-php
   git:
