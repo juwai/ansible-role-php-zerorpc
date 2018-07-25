@@ -19,40 +19,30 @@
   failed_when: "'ERROR' in pecl_zmq_result.stdout"
   when: "'PHP 5' in php_version.stdout"
 
-- name: ensure php-zmq folder not exist
-  file:
-    path: /tmp/php-zmq
-    state: absent
-
 - name: git clone php-zmq
   git:
     repo: https://github.com/mkoppanen/php-zmq.git
-    dest: "/tmp/php-zmq"
+    dest: "~/php-zmq"
     version: "{{ zmq_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
 - name: install zmq php extension from source
   shell: phpize && ./configure && make && make install
   args:
-    chdir: /tmp/php-zmq
+    chdir: ~/php-zmq
   when: "'PHP 7' in php_version.stdout"
-
-- name: ensure msgpack-php folder not exist
-  file:
-    path: /tmp/php-msgpack
-    state: absent
 
 - name: git clone msgpack-php
   git:
     repo: https://github.com/msgpack/msgpack-php.git
-    dest: "/tmp/php-msgpack"
+    dest: "~/php-msgpack"
     version: "{{ msgpack_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
 - name: install msgpack php extension from source
   shell: phpize && ./configure && make && make install
   args:
-    chdir: /tmp/php-msgpack
+    chdir: ~/php-msgpack
   when: "'PHP 7' in php_version.stdout"
 
 - name: ensure zmq and msgpack extension present in php config
