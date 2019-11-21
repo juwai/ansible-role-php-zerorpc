@@ -19,6 +19,15 @@
   failed_when: "'ERROR' in pecl_zmq_result.stdout"
   when: "'PHP 5' in php_version.stdout"
 
+- name: delete zmq and msgpack packages
+  file:
+    path: ~/{{ item }}
+    state: absent
+  with_items:
+    - php-msgpack
+    - php-zmq
+  when: "'PHP 7' in php_version.stdout"
+
 - name: git clone php-zmq
   git:
     repo: https://github.com/mkoppanen/php-zmq.git
