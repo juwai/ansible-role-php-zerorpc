@@ -29,7 +29,7 @@
 - name: install zmq php extension from source
   shell: phpize && ./configure && make && make install
   args:
-    chdir: ~/php-zmq
+    chdir: ~/php-zmq-{{ zmq_source_version }}
   when: "'PHP 7' in php_version.stdout"
 
 - name: git clone msgpack-php
@@ -42,7 +42,7 @@
 - name: install msgpack php extension from source
   shell: phpize && ./configure && make && make install
   args:
-    chdir: ~/php-msgpack
+    chdir: ~/php-msgpack-{{ msgpack_source_version }}
   when: "'PHP 7' in php_version.stdout"
 
 - name: ensure zmq and msgpack extension present in php config
