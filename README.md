@@ -22,7 +22,7 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Commit, tag, or branch of msgpack PHP extension to use when installing from source.
 
-Default is `msgpack-2.0.2`.
+Default is `msgpack-2.0.3`.
 
 ### pecl_msgpack_version
 
@@ -64,7 +64,7 @@ Default is `false`.
 
 Commit, tag, or branch of zmq PHP extension to use when installing from source.
 
-Default is `f2617063a4c007ca6073c0d09e9f36fd9b87ddaf`.
+Default is `fc6e966b86efb957b70f2c4f1ca4613f609e6323`.
 
 Dependencies
 ------------
