@@ -22,27 +22,27 @@
 - name: git clone php-zmq
   git:
     repo: https://github.com/mkoppanen/php-zmq.git
-    dest: "~/php-zmq"
+    dest: "~/php-zmq-{{ zmq_source_version }}"
     version: "{{ zmq_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
 - name: install zmq php extension from source
   shell: phpize && ./configure && make && make install
   args:
-    chdir: ~/php-zmq
+    chdir: ~/php-zmq-{{ zmq_source_version }}
   when: "'PHP 7' in php_version.stdout"
 
 - name: git clone msgpack-php
   git:
     repo: https://github.com/msgpack/msgpack-php.git
-    dest: "~/php-msgpack"
+    dest: "~/php-msgpack-{{ msgpack_source_version }}"
     version: "{{ msgpack_source_version }}"
   when: "'PHP 7' in php_version.stdout"
 
 - name: install msgpack php extension from source
   shell: phpize && ./configure && make && make install
   args:
-    chdir: ~/php-msgpack
+    chdir: ~/php-msgpack-{{ msgpack_source_version }}
   when: "'PHP 7' in php_version.stdout"
 
 - name: ensure zmq and msgpack extension present in php config
