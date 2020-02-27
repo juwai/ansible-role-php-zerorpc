@@ -9,7 +9,7 @@ system("
 
 Vagrant.configure(2) do |config|
   config.vm.box = "juwai-centos68"
-  config.vm.box_url = "http://downloads.juwai.io/devops/boxes/juwai-centos68.box"
+  config.vm.box_url = "http://downloads.juwai.xyz/devops/boxes/juwai-centos68.box"
 
   config.vm.synced_folder ".", "/vagrant", disabled: true
 
